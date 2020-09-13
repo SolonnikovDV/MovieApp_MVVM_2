@@ -22,4 +22,8 @@
     <string name="favorite">Favorite</string>
     <string name="enter_the_name_of_movie_you_want_to_find">Enter the name of movie you want to find</string>
     <string name="find">Find</string>
+    <string name="devider">/</string>
+    <string name="vote_average">Vote average</string>
+    <string name="vote_count">Vote count</string>
+    <string name="popularity">Popularity</string>
 </resources>

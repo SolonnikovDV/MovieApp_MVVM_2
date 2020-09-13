@@ -1,24 +1,18 @@
 package com.example.movielistonfragments.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.movielistonfragments.R
+import com.example.movielistonfragments.ui.MovieActivity
+import com.example.movielistonfragments.ui.MovieViewModel
 
+class SearchFragment: Fragment(R.layout.fragment_search) {
 
-class SearchFragment : Fragment() {
-companion object{
-    const val TAG = "SearchFragment"
-}
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
+    lateinit var viewModel: MovieViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MovieActivity).viewModel
     }
-
 }
