@@ -6,6 +6,6 @@ import com.example.movieapp_mvvm.db.MovieDataBase
 class MovieRepository (
     val db: MovieDataBase
 ){
-    suspend fun getMovies(language: String, pageNumber: Int) =
-        RetrofitInstance.api.getMovies(language, pageNumber)
+    suspend fun getMovies(apiKey: String, language: String, pageNumber: Int) =
+        RetrofitInstance.api.getMovies(apiKey, language, pageNumber)
 }

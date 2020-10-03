@@ -16,12 +16,12 @@ interface MovieAPI {
 
     @GET(POPULAR_REQUEST)
     suspend fun getMovies(
+        @Query("api_key")
+        apiKey: String = API_KEY,
         @Query("language")
         language: String = "ru-RUS",
         @Query("page")
-        page: Int = 1,
-        @Query("api_key")
-        apiKey: String = API_KEY
+        page: Int = 1
     ): Response<MovieResponse>
 
     @GET(SEARCH_REQUEST)

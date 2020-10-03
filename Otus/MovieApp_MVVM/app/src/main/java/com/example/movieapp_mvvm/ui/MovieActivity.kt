@@ -18,8 +18,8 @@ class MovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
 
-        val moviesRepository = MovieRepository(MovieDataBase(this))
-        val viewModelProviderFactory = MovieViewModelProviderFactory(moviesRepository)
+        val movieRepository = MovieRepository(MovieDataBase(this))
+        val viewModelProviderFactory = MovieViewModelProviderFactory(movieRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(MovieViewModel::class.java)
         bottomNavigationView.setupWithNavController(moviesNavHostFragment.findNavController())
     }

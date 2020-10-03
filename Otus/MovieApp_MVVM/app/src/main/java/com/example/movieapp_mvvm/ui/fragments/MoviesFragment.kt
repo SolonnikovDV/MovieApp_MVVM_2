@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp_mvvm.R
-import com.example.movieapp_mvvm.adapters.MoviesAdapter
+import com.example.movieapp_mvvm.adapters.MovieAdapter
 import com.example.movieapp_mvvm.ui.MovieActivity
 import com.example.movieapp_mvvm.ui.MovieViewModel
 import com.example.movieapp_mvvm.util.Resource
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_movies.*
 class MoviesFragment : Fragment(R.layout.fragment_movies){
 
     lateinit var viewModel: MovieViewModel
-    lateinit var movieAdapter: MoviesAdapter
+    lateinit var movieAdapter: MovieAdapter
 
     companion object{
         const val TAG = "MoviesFragment"
@@ -33,6 +33,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies){
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         movieAdapter.differ.submitList(movieResponse.movies)
+                        Log.i("_movieAdapter.differ", movieAdapter.differ.submitList(movieResponse.movies).toString())
                     }
                 }
                 is Resource.Error->{
@@ -57,7 +58,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies){
     }
 
     private fun setupRecyclerView() {
-        movieAdapter = MoviesAdapter()
+        movieAdapter = MovieAdapter()
         rvMovieList.apply {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(activity)

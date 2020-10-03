@@ -12,14 +12,14 @@ import com.example.movieapp_mvvm.R
 import com.example.movieapp_mvvm.models.Movie
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val differCallBack = object : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id.toString() == newItem.id.toString()
+            return oldItem.id== newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
@@ -46,11 +46,11 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(movie.posterPath).into(ivMovieImage)
+//            Glide.with(this).load(movie.posterPath).into(ivMovieImage)
             tvTitle.text = movie.title
-            tvOverview.text = movie.overview
+//            tvOverview.text = movie.overview
 
-            setOnClickListener {
+            setOnItemClickListener {
                 onItemClickListener?.let { it(movie) }
             }
         }
