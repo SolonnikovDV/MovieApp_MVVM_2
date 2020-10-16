@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MovieApp_MVVM</string>
+    <string name="release_date">RELEASE DATE</string>
+    <string name="overview">OVERVIEW</string>
+    <string name="title">TITLE</string>
+    <string name="popularity">POPULARITY</string>
+    <string name="vote_count">VOTE COUNT</string>
+    <string name="original_title">ORIGINAL TITLE</string>
+    <string name="search">Search...</string>
+</resources>
