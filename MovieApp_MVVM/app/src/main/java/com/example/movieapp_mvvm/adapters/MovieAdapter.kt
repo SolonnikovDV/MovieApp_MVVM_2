@@ -54,7 +54,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 .load(IMAGE_PRE_PATH + movie.posterPath)
                 .fitCenter()
                 .into(ivMovieImage)
-            tvTitle.text = movie.title + " (" + movie.releaseDate.split("-", ignoreCase = true).get(0) + ")"
+            tvTitle.text = movie.title + " (" + movie.releaseDate?.split("-", ignoreCase = true)?.get(0) + ")"
             tvOverview.text = movie.overview
             tvPopularity.text = "TMDb rate: " + movie.popularity.toString()
             tvOriginalTitle.text = "(" + movie.originalLanguage + ") " + movie.originalTitle
