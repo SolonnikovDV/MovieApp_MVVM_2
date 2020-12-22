@@ -75,9 +75,8 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 //                crashEmulation()
             }
 
-            val position = holder.adapterPosition
-            val seeLaterList = mutableListOf<Movie>()
             // button click
+            val position = holder.adapterPosition
             btnSeeLater.setOnClickListener {
                 onAlarmButtonClickListener?.let { it(position) }
                 Log.d("Alarm_button", position.toString())
