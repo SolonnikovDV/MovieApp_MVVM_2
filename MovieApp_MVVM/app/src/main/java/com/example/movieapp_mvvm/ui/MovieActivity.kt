@@ -16,11 +16,14 @@ class MovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_movie)
 
         val movieRepository = MovieRepository(MovieDataBase(this))
         val viewModelProviderFactory = MovieViewModelProviderFactory(application, movieRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(MovieViewModel::class.java)
         bottomNavigationView.setupWithNavController(moviesNavHostFragment.findNavController())
+
     }
+
 }

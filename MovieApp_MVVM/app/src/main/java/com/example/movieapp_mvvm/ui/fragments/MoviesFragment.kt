@@ -1,5 +1,7 @@
 package com.example.movieapp_mvvm.ui.fragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,18 +14,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp_mvvm.R
 import com.example.movieapp_mvvm.adapters.MovieAdapter
-import com.example.movieapp_mvvm.models.MovieResponse
+import com.example.movieapp_mvvm.models.Movie
+import com.example.movieapp_mvvm.alarm.AlarmService
 import com.example.movieapp_mvvm.ui.MovieActivity
 import com.example.movieapp_mvvm.ui.MovieViewModel
 import com.example.movieapp_mvvm.util.Constants.Companion.LANGUAGE_RUS
 import com.example.movieapp_mvvm.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.movieapp_mvvm.util.Resource
 import kotlinx.android.synthetic.main.fragment_movies.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     lateinit var viewModel: MovieViewModel
     lateinit var movieAdapter: MovieAdapter
+
+    val seeLaterList: MutableList<Movie> = ArrayList()
 
     companion object {
         const val TAG = "MoviesFragment"
@@ -34,11 +41,23 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         viewModel = (activity as MovieActivity).viewModel
         setupRecyclerView()
 
+        alarmService = AlarmService(requireContext())
+
         movieAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("details", it)
             }
             findNavController().navigate(R.id.action_moviesFragment_to_detailsFragment, bundle)
+        }
+
+        //set alarm time on click
+        movieAdapter.setOnAlarmButtonClickListener {
+            setAlarm{timeInMillis -> alarmService.setExactAlarm(timeInMillis)}
+
+            //saving item in the list
+            val movie = movieAdapter.differ.currentList[it]
+            seeLaterList.add(movie)
+            Log.d("See_later_list", seeLaterList.toString())
         }
 
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer { response ->
@@ -49,15 +68,16 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                         movieAdapter.differ.submitList(movieResponse.movies.toList())
                         val totalPages = movieResponse.totalPages / QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.popularMoviesPage == totalPages
-                        if(isLastPage){
-                            rvMovieList.setPadding(0,0,0,0)
+                        if (isLastPage) {
+                            rvMovieList.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
                 is Resource.Loading -> {
@@ -65,6 +85,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 }
             }
         })
+
     }
 
     //region Pagination
@@ -118,6 +139,40 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@MoviesFragment.scrollListener)
+        }
+    }
+
+    lateinit var alarmService: AlarmService
+
+    fun setAlarm(callback: (Long) -> Unit) {
+        Calendar.getInstance().apply {
+            this.set(Calendar.SECOND, 0)
+            this.set(Calendar.MILLISECOND, 0)
+            DatePickerDialog(
+                requireContext(),
+                0,
+                { _, year, month, day ->
+                    this.set(Calendar.YEAR, year)
+                    this.set(Calendar.MONTH, month)
+                    this.set(Calendar.DAY_OF_MONTH, day)
+
+                    TimePickerDialog(
+                        requireContext(),
+                        0,
+                        { _, hour, min ->
+                            this.set(Calendar.HOUR_OF_DAY, hour)
+                            this.set(Calendar.MINUTE, min)
+                            callback(this.timeInMillis)
+                        },
+                        this.get(Calendar.HOUR_OF_DAY),
+                        this.get(Calendar.MINUTE),
+                        false
+                    ).show()
+                },
+                this.get(Calendar.YEAR),
+                this.get(Calendar.MONTH),
+                this.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 

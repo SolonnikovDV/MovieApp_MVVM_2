@@ -14,5 +14,9 @@ class Constants {
         const val IMAGE_PRE_PATH = "https://image.tmdb.org/t/p/w500"
 
         const val MOVIE_URL = "https://www.themoviedb.org/movie/"
+
+        const val ACTION_SET_EXACT_ALARM = "ACTION_SET_EXACT_ALARM"
+        const val EXTRA_EXACT_ALARM_TIME = "EXTRA_EXACT_ALARM_TIME"
+
     }
 }
