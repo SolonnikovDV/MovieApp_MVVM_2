@@ -23,7 +23,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var NOTIFICATION_CHANNEL_ID = "MovieApp_MVVM/app"
     val NOTIFICATION_ID = 100
     val NOTIFICATION_ICON = R.drawable.ic_logo
-    val LINK = "https://www.themoviedb.org/tv/97180-selena-the-series"
+//    val LINK = "https://www.themoviedb.org/tv/97180-selena-the-series"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -33,11 +33,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.size > 0) {
             val title = remoteMessage.data["title"]
             val body = remoteMessage.data["body"]
-            showNotification(applicationContext, title, body, LINK)
+            val link = remoteMessage.data["link"]
+            showNotification(applicationContext, title, body, link)
         } else {
             val title = remoteMessage.notification!!.title
             val body = remoteMessage.notification!!.body
-            showNotification(applicationContext, title, body, LINK)
+            val link = remoteMessage.notification!!.link.toString()
+            showNotification(applicationContext, title, body, link)
         }
     }
 
@@ -48,11 +50,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     fun showNotification(context: Context, title: String?, message: String?, link: String?) {
 
-        val notificationIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link)).apply {
-                data = Uri.parse("custom://" + System.currentTimeMillis())
-                action = "actionstring" + System.currentTimeMillis()
-                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-
+        val notificationIntent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(link)
             }
 
         val pendingIntent =
@@ -83,20 +82,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(notificationChannel)
-            notificationManager.notify(NOTIFICATION_ID, notification)
-
-        } else {
-            notification = NotificationCompat.Builder(context)
-                .setSmallIcon(NOTIFICATION_ICON)
-                .setAutoCancel(true)
-                .setContentText(message)
-                .setContentIntent(pendingIntent)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(title)
-                .build()
-
-            val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(NOTIFICATION_ID, notification)
         }
     }
