@@ -15,6 +15,8 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
+    //TODO
+    // add standart Notification
     fun buildNotification(context: Context, title: String, message: String) {
         Notify
             .with(context)
@@ -27,4 +29,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
     fun convertDate(timeMillis: Long): String =
         DateFormat.format("dd/MM/yyyy hh:mm:ss", timeMillis).toString()
+
+
 }
