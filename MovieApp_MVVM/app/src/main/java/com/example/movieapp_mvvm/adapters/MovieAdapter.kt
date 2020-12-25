@@ -5,19 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp_mvvm.R
 import com.example.movieapp_mvvm.models.Movie
-import com.example.movieapp_mvvm.ui.fragments.MoviesFragment
 import com.example.movieapp_mvvm.util.Constants.Companion.IMAGE_PRE_PATH
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 import java.lang.RuntimeException
-import java.nio.file.Files.find
-import kotlin.coroutines.coroutineContext
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 

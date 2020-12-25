@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.movieapp_mvvm.R
 import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_CHANNEL_ID
 import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_ICON
 import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_ID

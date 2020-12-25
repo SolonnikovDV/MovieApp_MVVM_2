@@ -23,7 +23,6 @@ import com.example.movieapp_mvvm.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.movieapp_mvvm.util.Resource
 import kotlinx.android.synthetic.main.fragment_movies.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
