@@ -12,6 +12,9 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.movieapp_mvvm.R
+import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_CHANNEL_ID
+import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_ICON
+import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_ID
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -20,9 +23,7 @@ import com.google.firebase.messaging.RemoteMessage
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val TAG = "MyFirebaseMessagingService"
-    var NOTIFICATION_CHANNEL_ID = "MovieApp_MVVM/app"
-    val NOTIFICATION_ID = 100
-    val NOTIFICATION_ICON = R.drawable.ic_logo
+
 //    val LINK = "https://www.themoviedb.org/tv/97180-selena-the-series"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

@@ -1,5 +1,7 @@
 package com.example.movieapp_mvvm.util
 
+import com.example.movieapp_mvvm.R
+
 class Constants {
     companion object{
         const val API_KEY = "ecd2b50b656d93b80622dcd250837bc4"
@@ -12,14 +14,20 @@ class Constants {
 
         // pre-path for Glide to get image from tmdb
         const val IMAGE_PRE_PATH = "https://image.tmdb.org/t/p/w500"
-
+        // for displaying a movie details in DetailsFragment
         const val MOVIE_URL = "https://www.themoviedb.org/movie/"
 
-        const val ACTION_SET_EXACT_ALARM = "ACTION_SET_EXACT_ALARM"
+        //for AlarmService and AlarmReceiver
         const val EXTRA_EXACT_ALARM_TIME = "EXTRA_EXACT_ALARM_TIME"
+        const val ACTION_SET_EXACT = "ACTION_SET_EXTRA"
+        //extends for alarm schedule
+        //set repetitive alarm (not using yet)
+        const val ACTION_SET_REPETITIVE_EXACT = "ACTION_SET_REPETITIVE_EXACT"
 
-        const val CHANNEL_ID = "channelID"
-        const val CHANNEL_NME = "channelName"
+        //for MyFirebaseMessagingService
+        var NOTIFICATION_CHANNEL_ID = "MovieApp_MVVM/app"
+        val NOTIFICATION_ID = 100
+        val NOTIFICATION_ICON = R.drawable.ic_logo
 
     }
 }

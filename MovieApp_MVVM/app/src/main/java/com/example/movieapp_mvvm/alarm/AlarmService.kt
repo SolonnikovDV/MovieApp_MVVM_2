@@ -9,40 +9,48 @@ import com.example.movieapp_mvvm.util.Constants
 import com.example.movieapp_mvvm.util.RandomIntUtil
 
 class AlarmService(val context: Context) {
-    val alarmManager: AlarmManager? =
-        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val alarmManager: AlarmManager? =
+        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
-    fun setExactAlarm(timeInMills: Long) {
+    fun setExactAlarm(timeInMillis: Long) {
         setAlarm(
-            timeInMills,
+            timeInMillis,
             getPendingIntent(
-            getIntent().apply {
-                action = Constants.ACTION_SET_EXACT_ALARM
-                putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMills)
-            }
-        ))
+                getIntent().apply {
+                    action = Constants.ACTION_SET_EXACT
+                    putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMillis)
+                }
+            )
+        )
     }
 
-    fun setAlarm(timeInMills: Long, pendingIntent: PendingIntent) {
+    private fun getPendingIntent(intent: Intent) =
+        PendingIntent.getBroadcast(
+            context,
+            getRandomRequestCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+    private fun setAlarm(timeInMillis: Long, pendingIntent: PendingIntent) {
         alarmManager?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP, timeInMills, pendingIntent
+                    AlarmManager.RTC_WAKEUP,
+                    timeInMillis,
+                    pendingIntent
                 )
             } else {
                 alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP, timeInMills, pendingIntent
+                    AlarmManager.RTC_WAKEUP,
+                    timeInMillis,
+                    pendingIntent
                 )
             }
         }
     }
 
-    fun getIntent() = Intent(context, AlarmService::class.java)
+    private fun getIntent() = Intent(context, AlarmReceiver::class.java)
 
-    fun getPendingIntent(intent: Intent): PendingIntent = PendingIntent.getBroadcast(
-        context,
-        RandomIntUtil.getRandomInt(),
-        intent,
-        PendingIntent.FLAG_CANCEL_CURRENT
-    )
+    private fun getRandomRequestCode() = RandomIntUtil.getRandomInt()
 }

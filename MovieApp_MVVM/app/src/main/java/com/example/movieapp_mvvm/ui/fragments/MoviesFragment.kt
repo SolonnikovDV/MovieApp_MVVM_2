@@ -41,8 +41,11 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         viewModel = (activity as MovieActivity).viewModel
         setupRecyclerView()
 
+        //init alarmService
         alarmService = AlarmService(requireContext())
 
+        //show movie details on click in DetailsFragment
+        //using nav_graph
         movieAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("details", it)
