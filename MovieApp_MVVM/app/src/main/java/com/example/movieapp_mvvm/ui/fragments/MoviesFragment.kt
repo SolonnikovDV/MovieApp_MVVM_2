@@ -30,7 +30,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     lateinit var viewModel: MovieViewModel
     lateinit var movieAdapter: MovieAdapter
 
-    val seeLaterList: MutableList<Movie> = ArrayList()
+    val seeLaterList: Queue<Movie> = LinkedList<Movie>()
 
     companion object {
         const val TAG = "MoviesFragment"

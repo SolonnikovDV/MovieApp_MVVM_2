@@ -3,20 +3,20 @@ package com.example.movieapp_mvvm.alarm
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.text.format.DateFormat
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.movieapp_mvvm.R
+import com.example.movieapp_mvvm.adapters.MovieAdapter
 import com.example.movieapp_mvvm.ui.fragments.MoviesFragment
 import com.example.movieapp_mvvm.util.Constants.Companion.ACTION_SET_EXACT
 import com.example.movieapp_mvvm.util.Constants.Companion.CHANNEL_ID
@@ -49,7 +49,18 @@ class AlarmReceiver: BroadcastReceiver() {
         //TODO
         // put here the clicked item
         val notificationIntent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("https://www.google.com")
+//            data = Uri.parse("https://www.google.com")
+
+            MovieAdapter().setOnAlarmButtonClickListener {
+                val item = MoviesFragment().seeLaterList.poll()
+                val bundle = Bundle().apply {
+                    putSerializable("details", item)
+                }
+                findNavController(MoviesFragment()).navigate(
+                    R.id.action_moviesFragment_to_detailsFragment,
+                    bundle
+                )
+            }
         }
 
         val pendingIntent = PendingIntent.getActivity(
