@@ -25,9 +25,11 @@ class Constants {
         const val ACTION_SET_REPETITIVE_EXACT = "ACTION_SET_REPETITIVE_EXACT"
 
         //for MyFirebaseMessagingService
-        var NOTIFICATION_CHANNEL_ID = "MovieApp_MVVM/app"
-        val NOTIFICATION_ID = 100
-        val NOTIFICATION_ICON = R.drawable.ic_logo
+        const val NOTIFICATION_CHANNEL_ID = "MovieApp_MVVM/app"
+        const val NOTIFICATION_ID = 100
+        const val NOTIFICATION_ICON = R.drawable.ic_logo
 
+        const val CHANNEL_ID = "CHANNEL_ID"
+        const val CHANNEL_NAME = "CHANNEL_NAME"
     }
 }

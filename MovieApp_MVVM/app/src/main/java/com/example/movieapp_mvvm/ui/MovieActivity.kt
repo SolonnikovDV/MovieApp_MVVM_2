@@ -1,14 +1,21 @@
 package com.example.movieapp_mvvm.ui
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.movieapp_mvvm.R
 import com.example.movieapp_mvvm.db.MovieDataBase
 import com.example.movieapp_mvvm.repository.MovieRepository
+import com.example.movieapp_mvvm.util.Constants
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_movie.*
@@ -40,13 +47,11 @@ class MovieActivity : AppCompatActivity() {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
             Log.w(TAG, token.toString())
         })
-
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
     }
 
 }
