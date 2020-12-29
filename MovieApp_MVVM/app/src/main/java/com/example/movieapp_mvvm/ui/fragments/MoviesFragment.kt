@@ -29,10 +29,11 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     lateinit var viewModel: MovieViewModel
     lateinit var movieAdapter: MovieAdapter
 
-    val seeLaterList: Queue<Movie> = LinkedList<Movie>()
+
 
     companion object {
         const val TAG = "MoviesFragment"
+        val seeLaterList: Queue<Movie> = LinkedList<Movie>()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,9 +58,13 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             setAlarm{timeInMillis -> alarmService.setExactAlarm(timeInMillis)}
 
             //saving item in the list
-            val movie = movieAdapter.differ.currentList[it]
-            seeLaterList.add(movie)
-            Log.d("See_later_list", seeLaterList.toString())
+            seeLaterList.add(movieAdapter.differ.currentList[it])
+            Toast.makeText(
+                context,
+                "Movie ''${movieAdapter.differ.currentList[it].title}'' was added in reminder list",
+                Toast.LENGTH_SHORT
+            )
+                .show()
         }
 
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer { response ->

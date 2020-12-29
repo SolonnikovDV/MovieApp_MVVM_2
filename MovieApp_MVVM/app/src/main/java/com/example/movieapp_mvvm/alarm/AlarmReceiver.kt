@@ -8,14 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.movieapp_mvvm.R
-import com.example.movieapp_mvvm.adapters.MovieAdapter
+import com.example.movieapp_mvvm.ui.MovieActivity
 import com.example.movieapp_mvvm.ui.fragments.MoviesFragment
 import com.example.movieapp_mvvm.util.Constants.Companion.ACTION_SET_EXACT
 import com.example.movieapp_mvvm.util.Constants.Companion.CHANNEL_ID
@@ -24,6 +23,10 @@ import com.example.movieapp_mvvm.util.Constants.Companion.EXTRA_EXACT_ALARM_TIME
 import com.example.movieapp_mvvm.util.Constants.Companion.NOTIFICATION_ID
 
 class AlarmReceiver: BroadcastReceiver() {
+
+    companion object{
+        const val TAG = "AlarmReceiver"
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
         val timeInMillis = intent.getLongExtra(EXTRA_EXACT_ALARM_TIME, 0L)
@@ -34,6 +37,7 @@ class AlarmReceiver: BroadcastReceiver() {
     }
 
 
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     private fun buildNotification(context: Context, title: String, message: String){
 
 //building notification with io.karn:notify library
@@ -47,19 +51,9 @@ class AlarmReceiver: BroadcastReceiver() {
 
         //TODO
         // put here the clicked item
-        val notificationIntent = Intent(Intent.ACTION_VIEW).apply {
-//            data = Uri.parse("https://www.google.com")
-
-            MovieAdapter().setOnAlarmButtonClickListener {
-                val item = MoviesFragment().seeLaterList.poll()
-                val bundle = Bundle().apply {
-                    putSerializable("details", item)
-                }
-                findNavController(MoviesFragment()).navigate(
-                    R.id.action_moviesFragment_to_detailsFragment,
-                    bundle
-                )
-            }
+        val notificationIntent = Intent(context, MovieActivity::class.java).apply {
+            MoviesFragment.Companion.seeLaterList.poll()
+//            Log.d(TAG, MoviesFragment.Companion.seeLaterList.poll().toString())
         }
 
         val pendingIntent = PendingIntent.getActivity(
