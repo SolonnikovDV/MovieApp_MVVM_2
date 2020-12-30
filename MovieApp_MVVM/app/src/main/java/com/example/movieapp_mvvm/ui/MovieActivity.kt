@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -36,11 +37,12 @@ class MovieActivity : AppCompatActivity() {
 
         val movieRepository = MovieRepository(MovieDataBase(this))
         val viewModelProviderFactory = MovieViewModelProviderFactory(application, movieRepository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(MovieViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(MovieViewModel::class.java)
         bottomNavigationView.setupWithNavController(moviesNavHostFragment.findNavController())
     }
 
-    fun getToken(){
+    fun getToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
@@ -55,9 +57,20 @@ class MovieActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        val bundle = Bundle().apply {
-            putSerializable("details", MoviesFragment.Companion.seeLaterList.poll())
+        intent?.getSerializableExtra("seeLaterItem")
+        val seeLaterList = MoviesFragment.Companion.seeLaterList
+
+        if (seeLaterList.size > 0) {
+            val position = seeLaterList.size - 1
+            val bundle = Bundle().apply {
+                putSerializable("details", seeLaterList[position])
+            }
+            findNavController(MoviesFragment()).navigate(
+                R.id.action_moviesFragment_to_detailsFragment,
+                bundle
+            )
+        } else {
+            Toast.makeText(this, "Reminder list is empty", Toast.LENGTH_LONG).show()
         }
-        findNavController(MoviesFragment()).navigate(R.id.action_moviesFragment_to_detailsFragment, bundle)
     }
 }

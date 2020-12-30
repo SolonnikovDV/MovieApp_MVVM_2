@@ -23,6 +23,7 @@ import com.example.movieapp_mvvm.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.movieapp_mvvm.util.Resource
 import kotlinx.android.synthetic.main.fragment_movies.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
@@ -33,7 +34,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     companion object {
         const val TAG = "MoviesFragment"
-        val seeLaterList: Queue<Movie> = LinkedList<Movie>()
+        val seeLaterList: ArrayList<Movie> = ArrayList<Movie>()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,10 +60,11 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
             //saving item in the list
             seeLaterList.add(movieAdapter.differ.currentList[it])
+
             Toast.makeText(
                 context,
-                "Movie ''${movieAdapter.differ.currentList[it].title}'' was added in reminder list",
-                Toast.LENGTH_SHORT
+                "Movie ''${movieAdapter.differ.currentList[it].title}'' was added to reminder list",
+                Toast.LENGTH_LONG
             )
                 .show()
         }

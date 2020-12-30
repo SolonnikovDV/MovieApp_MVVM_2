@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.movieapp_mvvm.R
+import com.example.movieapp_mvvm.models.Movie
 import com.example.movieapp_mvvm.ui.MovieActivity
 import com.example.movieapp_mvvm.ui.fragments.MoviesFragment
 import com.example.movieapp_mvvm.util.Constants.Companion.ACTION_SET_EXACT
@@ -52,7 +53,7 @@ class AlarmReceiver: BroadcastReceiver() {
         //TODO
         // put here the clicked item
         val notificationIntent = Intent(context, MovieActivity::class.java).apply {
-            MoviesFragment.Companion.seeLaterList.poll()
+            putExtra("seeLaterItem", MoviesFragment.Companion.seeLaterList)
 //            Log.d(TAG, MoviesFragment.Companion.seeLaterList.poll().toString())
         }
 
