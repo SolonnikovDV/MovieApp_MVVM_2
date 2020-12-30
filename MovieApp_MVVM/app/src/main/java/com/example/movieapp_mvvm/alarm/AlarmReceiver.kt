@@ -9,12 +9,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.text.format.DateFormat
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.movieapp_mvvm.R
-import com.example.movieapp_mvvm.models.Movie
 import com.example.movieapp_mvvm.ui.MovieActivity
 import com.example.movieapp_mvvm.ui.fragments.MoviesFragment
 import com.example.movieapp_mvvm.util.Constants.Companion.ACTION_SET_EXACT
